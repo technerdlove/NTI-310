@@ -1,0 +1,97 @@
+    1  yum -y install openldap-servers openldap-clients
+    2  cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG 
+    3  vi /var/lib/ldap/DB_CONFIG 
+    4  chown ldap. /var/lib/ldap/DB_CONFIG
+    5  ls -a /var/lib/ldap/DB_CONFIG
+    6  ls -l /var/lib/ldap/DB_CONFIG
+    7  systemctl enable slapd
+    8  systemctl slapd
+    9  systemctl start slapd
+   10  ps aux | grep slapd 
+   11  netstat
+   12  yum -y install httpd
+   13  yum -y install epel-release
+   14  yum -y install phpldapadmin
+   15  systemctl enable httpd
+   16  setsebool -P httpd_can_connect_ldap on
+   17  systemctl start httpd
+   18  ifconfig | more
+   19  cd /etc/httpd/
+   20  ls
+   21  cd conf.d/
+   22  ls
+   23  vi phpldapadmin.conf 
+   24  ls
+   25  clear
+   26  systemctl restart httpd.service
+   27  vi phpldapadmin.conf 
+   28  cp phpldapadmin.conf phpldapadmin.conf.bak 
+   29  cat phpldapadmin.conf
+   30  sed -i 's/Require local\'
+   31  sed -i 's/Require local/
+   32  sed -i 's,Require local,#Require local/
+   33  sed -i 's,Require local,#Require local\n     Require all granted,g' phpldapadmin.conf
+   34  cat phpldapadmin.conf
+   35  cp phpldapadmin.conf.bak phpldapadmin.conf
+   36  cat
+   37  cat phpldapadmin.conf
+   38  cp phpldapadmin.conf phpldapadmin.conf.orig
+   39  vi phpldapadmin.conf.orig 
+   40  sed -i 's,Require local,#Require local\n    Require all granted,g' phpldapadmin.conf.orig
+   41  cat phpldapadmin.conf.orig
+   42  cp  /etc/phpldapadmin/config.php /etc/phpldapadmin/config.php.orig
+   43  ls
+   44  vi /etc/phpldapadmin/config.php
+   45  grep nti /etc/phpldapadmin/config.php
+   46  slappasswd
+   47  ls
+   48  vi /etc/phpldapadmin/config.php
+   49  vi /etc/phpldapadmin/config.php
+   50  vi db.ldif
+   51  ldapmodify -Y EXTERNAL  -H ldapi:/// -f db.ldif
+   52  vi db.ldif
+   53  slappasswd
+   54  slappasswd
+   55  vi db.ldif
+   56  ldapmodify -Y EXTERNAL  -H ldapi:/// -f db.ldif
+   57  vi db.ldif
+   58  ldapmodify -Y EXTERNAL  -H ldapi:/// -f db.ldif
+   59  vi monitor.ldif
+   60  ldapmodify -Y EXTERNAL  -H ldapi:/// -f monitor.ldif
+   61  openssl req -new -x509 -nodes -out /etc/openldap/certs/nti310.pem -keyout /etc/openldap/certs/nti310.pem -days 365
+   62  chown -R ldap:ldap /etc/openldap/certs/*.pem
+   63  ll /etc/openldap/certs/*.pem
+   64  ll /etc/openldap/certs/
+   65  ll /etc/openldap/certs/
+   66  ll /etc/openldap/certs/*.pem
+   67  ls -a
+   68  openssl req -new -x509 -nodes -out /etc/openldap/certs/cert.pem -keyout /etc/openldap/certs/nti310.pem -days 365
+   69  chown -R ldap:ldap /etc/openldap/certs/*.pem
+   70  vi certs.ldif
+   71  ldapmodify -Y EXTERNAL  -H ldapi:/// -f certs.ldif
+   72  slaptest -u
+   73  cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+   74  chown ldap:ldap /var/lib/ldap/*
+   75  ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+   76  ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif
+   77  ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
+   78   vi base.ldif
+   79  ldapadd -x -W -D "cn=ldapadm,dc=itzgeek,dc=local" -f base.ldif
+   80  ldapadd -x -W -D "cn=ldapadm,dc=itzgeek,dc=local" -f base.ldif
+   81  ldapadd -x -W -D "cn=ldapadm,dc=itzgeek,dc=local" -f base.ldif
+   82  ldapadd -x -W -D "cn=ldapadm,dc=itzgeek,dc=local" -f base.ldif
+   83  ldapadd -x -W -D "cn=ldapadm,dc=itzgeek,dc=local" -f base.ldif
+   84  ls
+   85  grep sha
+   86  grep sha *
+   87  ls
+   88  slappasswd
+   89  vi db.ldif 
+   90  ldapmodify -Y EXTERNAL  -H ldapi:/// -f db.ldif
+   91  ldapadd -x -W -D "cn=ldapadm,dc=itzgeek,dc=local" -f base.ldif
+   92  ldapadd -x -W -D "cn=ldapadm,dc=itzgeek,dc=local" -f base.ldif
+   93  vim base.ldif 
+   94  ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif
+   95  vim base.ldif 
+   96  exit
+   97  history
