@@ -17,8 +17,10 @@ yum -y install phpldapadmin
 # Tell SE linux what's going on, so that it doesn't freek
 setsebool -P httpd_can_connect_ldap on
 
+systemctl enable httpd
+systemctl start httpd
 
-
+sed -i 's,Require local,#Require local\n    Require all granted,g' /etc/httpd/conf.d/phpldapadmin.conf
 
 # decent config guide: http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-configure-phpldapadmin-centos-7-ubuntu-16-04.html
 
