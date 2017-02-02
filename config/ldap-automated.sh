@@ -12,7 +12,7 @@ systemctl start slapd
 yum -y install httpd
 yum -y install epel-release
 yum -y install phpldapadmin
-# some source editing
+
 # Tell SE linux what's going on, so that it doesn't freek
 setsebool -P httpd_can_connect_ldap on
 
@@ -23,22 +23,8 @@ systemctl start httpd
 
 sed -i 's,Require local,#Require local\n    Require all granted,g' /etc/httpd/conf.d/phpldapadmin.conf
 
-# configure phpldapadmin config with our customizations
-#sed -i "s/$servers->setValue('server','name','Local LDAP Server');/$servers->setValue('server','name','NTI-310 Example LDAP Server');/g" /etc/phpldapadmin/config.php
-
-# have to change the delimeter here to ^ or we'll go into escaping hell
-#sed -i "s^// $servers->setValue('server','host','127.0.0.1');^$servers->setValue('server','host','127.0.0.1');^g" /etc/phpldapadmin/config.php
-# This won't work.  GAAAAAAAAAAAAAAAA
-# python string matching?  Or just pull down the whole damn file?  I'm kinda fine with that, actually
-# Okay, this is really where we shold be using python.
-
-
-# This assumes the script is being run from the github dirrectory
-
 cp NTI-310/config/config.php /etc/phpldapadmin/config.php
 chown ldap:apache /etc/phpldapadmin/config.php
-#not posative about that chown, this is off the top of my head, I should look.
-echo "check this chown"
 
 systemctl restart httpd.service
 
@@ -112,7 +98,6 @@ ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
 ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif 
 ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
 
-# Now you really want to make sure those ports were open!
 
 # Create base group and people structure
 
