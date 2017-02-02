@@ -1,1 +1,136 @@
-Space holder for automated openldap install.  I'll post when most folks are done with their automation/configuration.
+#/bin/bash
+# automation of ldap install, because that's just easier :)
+
+yum -y install openldap-servers openldap-clients
+
+cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG 
+chown ldap. /var/lib/ldap/DB_CONFIG
+
+systemctl enable slapd
+systemctl start slapd
+
+yum -y install httpd
+yum -y install epel-release
+yum -y install phpldapadmin
+# some source editing
+# Tell SE linux what's going on, so that it doesn't freek
+setsebool -P httpd_can_connect_ldap on
+
+systemctl enable httpd
+systemctl start httpd
+
+# Configure phpldapadmin.conf
+
+sed -i 's,Require local,#Require local\n    Require all granted,g' /etc/httpd/conf.d/phpldapadmin.conf
+
+# configure phpldapadmin config with our customizations
+#sed -i "s/$servers->setValue('server','name','Local LDAP Server');/$servers->setValue('server','name','NTI-310 Example LDAP Server');/g" /etc/phpldapadmin/config.php
+
+# have to change the delimeter here to ^ or we'll go into escaping hell
+#sed -i "s^// $servers->setValue('server','host','127.0.0.1');^$servers->setValue('server','host','127.0.0.1');^g" /etc/phpldapadmin/config.php
+# This won't work.  GAAAAAAAAAAAAAAAA
+# python string matching?  Or just pull down the whole damn file?  I'm kinda fine with that, actually
+# Okay, this is really where we shold be using python.
+
+
+# This assumes the script is being run from the github dirrectory
+
+cp config.php /etc/phpldapadmin/config.php
+chown ldap:apache /etc/phpldapadmin/config.php
+#not posative about that chown, this is off the top of my head, I should look.
+echo "check this chown"
+
+systemctl restart httpd.service
+
+echo "phpldapadmin is now up and running"
+echo "configuring ldap and ldapamdin"
+
+# generate and securely store a new pw.
+
+newsecret=$(slappasswd -g)
+newhash=$(slappasswd -s "$newsecret")
+echo "$newsecret" > /root/ldap_admin_pass
+
+echo "dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcSuffix
+olcSuffix: dc=nti310,dc=local
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcRootDN
+olcRootDN: cn=ldapadm,dc=nti310,dc=local
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcRootPW
+olcRootPW: $newhash" >> db.ldif
+
+ldapmodify -Y EXTERNAL  -H ldapi:/// -f db.ldif
+
+# Restrict auth
+
+echo 'dn: olcDatabase={1}monitor,cn=config
+changetype: modify
+replace: olcAccess
+olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external, cn=auth" read by dn.base="cn=ldapadm,dc=nti310,dc=local" read by * none' > monitor.ldif
+
+ldapmodify -Y EXTERNAL  -H ldapi:/// -f monitor.ldif
+
+
+# Generate certs
+
+openssl req -new -x509 -nodes -out /etc/openldap/certs/nti310ldapcert.pem -keyout /etc/openldap/certs/nti310ldapkey.pem -days 365 -subj "/C=US/ST=WA/L=Seattle/O=SCC/OU=IT/CN=nti310.local"
+
+chown -R ldap. /etc/openldap/certs/nti*.pem
+
+# Use Certs in LDAP
+
+echo "dn: cn=config
+changetype: modify
+replace: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/openldap/certs/nti310ldapcert.pem
+
+dn: cn=config
+changetype: modify
+replace: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/openldap/certs/nti310ldapkey.pem" > certs.ldif
+
+ldapmodify -Y EXTERNAL  -H ldapi:/// -f certs.ldif
+
+# Test cert configuration
+
+slaptest -u
+
+unalias cp
+
+cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+chown ldap:ldap /var/lib/ldap/*
+
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif 
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
+
+# Now you really want to make sure those ports were open!
+
+# Create base group and people structure
+
+echo "dn: dc=nti310,dc=local
+dc: nti310
+objectClass: top
+objectClass: domain
+
+dn: cn=ldapadm ,dc=nti310,dc=local
+objectClass: organizationalRole
+cn: ldapadm
+description: LDAP Manager
+
+dn: ou=People,dc=nti310,dc=local
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Group,dc=nti310,dc=local
+objectClass: organizationalUnit
+ou: Group" > base.ldif
+
+ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admin_pass
