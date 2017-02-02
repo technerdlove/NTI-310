@@ -35,7 +35,7 @@ sed -i 's,Require local,#Require local\n    Require all granted,g' /etc/httpd/co
 
 # This assumes the script is being run from the github dirrectory
 
-cp config.php /etc/phpldapadmin/config.php
+cp NTI-310/config/config.php /etc/phpldapadmin/config.php
 chown ldap:apache /etc/phpldapadmin/config.php
 #not posative about that chown, this is off the top of my head, I should look.
 echo "check this chown"
@@ -49,7 +49,7 @@ echo "configuring ldap and ldapamdin"
 
 newsecret=$(slappasswd -g)
 newhash=$(slappasswd -s "$newsecret")
-echo "$newsecret" > /root/ldap_admin_pass
+echo -n "$newsecret" > /root/ldap_admin_pass
 chmod 0600 /root/ldap_admin_pass
 
 echo "dn: olcDatabase={2}hdb,cn=config
