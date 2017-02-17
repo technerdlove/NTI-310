@@ -53,9 +53,12 @@ ServerName ldap-automate-c:443
 
 ### Test your changes
 
+`service httpd restart`
+
+
 Manual Unit Test: [Then test and make sure your cert is working by restarting apache and hitting the page as https.
 You will recive an error about an insecure cert.  It is insecure... it's self signed.  If we purchaced a domain name and got
-cert issued, we wouldn't get this warning.]
+cert issued, we wouldn't get this warning.  So hit okay and make sure you can log into phpmyadmin.  You won't get the error again on this computer.]
 
 
 ### Update Cypher Suite
@@ -92,3 +95,6 @@ SSLStaplingCache "shmcb:logs/stapling-cache(150000)"
 # Requires Apache >= 2.4.11
 # SSLSessionTickets Off
 ```
+### Test your changes
+
+`service httpd restart` Ensure the apache server restarts cleanly and that you can log into phpmyadmin over https.
