@@ -12,11 +12,16 @@ This tutorial is a synthesis of two other tutorials plus some of my commands.  Y
 ### First get rid of anonymous logins:
 
 /etc/phpldapadmin/config.php
+```
 $servers->setValue('login','anon_bind',false);
 (instead of true)
+```
+
 There is also a commented out section with anon_bind true, copy it and change to annonbind false, then uncomment your false.
-
-
+so change
+`\\$servers->setValue('login','anon_bind',true);`
+to
+`$servers->setValue('login','anon_bind',false);`
 
 
 ```
