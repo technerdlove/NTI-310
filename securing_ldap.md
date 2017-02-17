@@ -26,7 +26,7 @@ to `$servers->setValue('login','anon_bind',false);`
 [Visit your phpmyadmin page and ensure the annonymous checkbox has dissapeared.]
 
 ### Install mod_ssl
-This is a module loaded into apache.  Much like the linux kernel apache remains small, elegant and flexible by using modules.  We'll generate our cert and then configure the ssl.conf file.  Of note: we're also using some fun Diffy Helmen crypto which will make our exchanges more secure.  The Diffy Helmen crypto will take a bit to generate, so be patient. It will grab your terminal for about five minutes.  This is a good time to get a cup of coffee.
+This is a module loaded into apache.  Much like the linux kernel apache remains small, elegant and flexible by using modules.  We'll generate our cert and then configure the ssl.conf file.  Of note: we're also using some fun Diffie Hellmen crypto which will make our exchanges more secure.  The Diffie Hellmen crypto will take a bit to generate, so be patient. It will grab your terminal for about five minutes.  This is a good time to get a cup of coffee.
 
 
 ```
