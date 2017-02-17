@@ -1,4 +1,5 @@
 /etc/phpldapadmin/config.php
 $servers->setValue('login','anon_bind',false);
 (instead of true)
+There is also a commented out section with annonbind true, copy it and change to annonbind false, then uncomment your false.
 
