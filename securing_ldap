@@ -1,0 +1,4 @@
+/etc/phpldapadmin/config.php
+$servers->setValue('login','anon_bind',false);
+(instead of true)
+
