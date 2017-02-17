@@ -1,4 +1,4 @@
-# Step by step guide to making phpldapadmin use ssl
+# Guide to making phpldapadmin use ssl
 
 Automating these steps should be fairly easy.  A few echo's and searches and replaces should do the trick.  Use the -subj
 flag to automate ssl cert creation.
