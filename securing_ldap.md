@@ -18,10 +18,12 @@ $servers->setValue('login','anon_bind',false);
 ```
 
 There is also a commented out section with anon_bind true, copy it and change to annonbind false, then uncomment your false.
-so change
-`\\$servers->setValue('login','anon_bind',true);`
-to
-`$servers->setValue('login','anon_bind',false);`
+so change `\\$servers->setValue('login','anon_bind',true);`
+
+to `$servers->setValue('login','anon_bind',false);`
+
+### Install mod_ssl
+This is a module loaded into apache.  Much like the linux kernel apache remains small, elegant and flexible by using modules.  We'll generate our cert and then configure the ssl.conf file.  Of note: we're also using come fun diffy helmen crypto which will make our exchanges more secure.  The Diffy Helmen crypto will take a bit to generate, so be patient.  
 
 
 ```
