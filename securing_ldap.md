@@ -6,7 +6,7 @@ flag to automate ssl cert creation.
 This tutorial is a synthesis of two other tutorials plus some of my commands.  You can find them here:    
    * (https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-openldap-and-phpldapadmin-on-an-ubuntu-14-04-server)
    * (https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-apache-for-centos-7)
-They do a fairly good job of explaining the 'why' of what we're doing.  Also take a look at the apache/ssl section of your book.
+   * They do a fairly good job of explaining the 'why' of what we're doing.  Also take a look at the apache/ssl section of your book.
 
 
 ### First get rid of anonymous logins:
