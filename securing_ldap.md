@@ -53,6 +53,7 @@ Alias /ldapadmin /usr/share/phpldapadmin/htdocs
 DocumentRoot "/usr/share/phpldapadmin/htdocs"
 ServerName ldap-automate-c:443
 ```
+   * Note: use your server's name not ldap-automate-c on the ServerName line.
 
 ### Test your changes
 
