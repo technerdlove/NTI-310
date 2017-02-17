@@ -1,0 +1,15 @@
+54  mkdir certs
+   55  ls
+   56  cd certs
+   57  ls
+   58  umask 77;/usr/bin/openssl genrsa -aes128 2048 > server.key
+   59  openssl rsa -in server.key -out server.key
+   60  cat server.key 
+   61  make server.csr
+   62  ls
+   63  make server.csr
+   64  umask 77 ; /usr/bin/openssl req -utf8 -new -key server.key -out server.csr
+   65  ls
+   66  openssl x509 -in server.csr -out server.crt -req -signkey server.key -days 3650
+   67  ls
+   68  history
