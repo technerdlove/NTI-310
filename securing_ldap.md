@@ -1,9 +1,15 @@
-Step by step guide to making phpldapadmin use ssl
+# Step by step guide to making phpldapadmin use ssl
 
 Automating these steps should be fairly easy.  A few echo's and searches and replaces should do the trick.  Use the -subj
 flag to automate ssl cert creation.
 
-First get rid of anonymous logins:
+This tutorial is a synthesis of two other tutorials plus some of my commands.  You can find them here:    
+   * (https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-openldap-and-phpldapadmin-on-an-ubuntu-14-04-server)
+   * (https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-apache-for-centos-7)
+They do a fairly good job of explaining the 'why' of what we're doing.  Also take a look at the apache/ssl section of your book.
+
+
+### First get rid of anonymous logins:
 
 /etc/phpldapadmin/config.php
 $servers->setValue('login','anon_bind',false);
@@ -43,6 +49,9 @@ in `/etc/httpd/conf.d/ssl.conf`
 Manual Unit Test: [Then test and make sure your cert is working by restarting apache and hitting the page as https.
 You will recive an error about an insecure cert.  It is insecure... it's self signed.  If we purchaced a domain name and got
 cert issued, we wouldn't get this warning.]
+
+
+### Update Cypher Suite
 
 Open `/etc/httpd/conf.d/ssl.conf` again we're going to force it to use a more secure cypher suite.
 Comment out:
