@@ -1,4 +1,4 @@
-
+yum install -y nfs-utils
 mkdir /var/nfsshare
 mkdir /var/nfsshare/devstuff
 mkdir /var/nfsshare/testing
