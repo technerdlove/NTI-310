@@ -39,7 +39,7 @@ yum install mod_ssl
  
  Then open the ssl.conf file:
  
- vi /etc/httpd/conf.d/ssl.conf
+ `vi /etc/httpd/conf.d/ssl.conf`
 
 
 Under `"<VirtualHost _default_:443>"` add 
@@ -51,7 +51,7 @@ DocumentRoot "/usr/share/phpldapadmin/htdocs"
 ServerName ldap-automate-c:443
 ```
 
-in `/etc/httpd/conf.d/ssl.conf`
+### Test your changes
 
 Manual Unit Test: [Then test and make sure your cert is working by restarting apache and hitting the page as https.
 You will recive an error about an insecure cert.  It is insecure... it's self signed.  If we purchaced a domain name and got
