@@ -1,14 +1,20 @@
+Step by step guide to making phpldapadmin use ssl
+
+Automating these steps should be fairly easy.  A few echo's and searches and replaces should do the trick.  Use the -subj
+flag to automate ssl cert creation.
+
+First get rid of anonymous logins:
+
 /etc/phpldapadmin/config.php
 $servers->setValue('login','anon_bind',false);
 (instead of true)
-There is also a commented out section with annonbind true, copy it and change to annonbind false, then uncomment your false.
+There is also a commented out section with anon_bind true, copy it and change to annonbind false, then uncomment your false.
 
 
 
-Making phpldapadmin use ssl:
+
+```
 yum install mod_ssl
-
-
 
  mkdir /etc/ssl/private
  chmod 700 /etc/ssl/private
@@ -16,32 +22,40 @@ yum install mod_ssl
  /etc/ssl/certs/apache-selfsigned.crt
  openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
  cat /etc/ssl/certs/dhparam.pem | tee -a /etc/ssl/certs/apache-selfsigned.crt
+ ```
+ 
+ Then open the ssl.conf file:
+ 
  vi /etc/httpd/conf.d/ssl.conf
 
 
-Under "<VirtualHost _default_:443>" add 
+Under `"<VirtualHost _default_:443>"` add 
 
+```
 Alias /phpldapadmin /usr/share/phpldapadmin/htdocs
 Alias /ldapadmin /usr/share/phpldapadmin/htdocs
 DocumentRoot "/usr/share/phpldapadmin/htdocs"
 ServerName ldap-automate-c:443
+```
 
-in /etc/httpd/conf.d/ssl.conf
+in `/etc/httpd/conf.d/ssl.conf`
 
 Manual Unit Test: [Then test and make sure your cert is working by restarting apache and hitting the page as https.
 You will recive an error about an insecure cert.  It is insecure... it's self signed.  If we purchaced a domain name and got
 cert issued, we wouldn't get this warning.]
 
-Open /etc/httpd/conf.d/ssl.conf again we're going to force it to use a more secure cypher suite.
+Open `/etc/httpd/conf.d/ssl.conf` again we're going to force it to use a more secure cypher suite.
 Comment out:
+
+```
 # SSLProtocol all -SSLv2
 . . .
 # SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
+```
 
+After the virtualhost is closed with `</VirtualHost>`, paste in:
 
-</VirtualHost>
-. . .
-
+```
 # Begin copied text
 # from https://cipherli.st/
 # and https://raymii.org/s/tutorials/Strong_SSL_Security_On_Apache2.html
@@ -61,3 +75,4 @@ SSLUseStapling on
 SSLStaplingCache "shmcb:logs/stapling-cache(150000)" 
 # Requires Apache >= 2.4.11
 # SSLSessionTickets Off
+```
