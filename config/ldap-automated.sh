@@ -1,5 +1,7 @@
 #/bin/bash
 # automation of ldap install, because that's just easier :)
+yum -y install git
+git clone https://github.com/nic-instruction/NTI-310.git
 
 yum -y install openldap-servers openldap-clients
 
