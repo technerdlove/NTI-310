@@ -5,3 +5,4 @@
 [root@ldap-automate etc]#  authconfig --enableldaptls --update 
 
 apt-get install nslcd
+echo "tls_reqcert allow" >> /etc/nslcd.conf
