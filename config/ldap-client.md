@@ -1,5 +1,5 @@
 ```
-apt-get -y install libnss-ldap libpam-ldap ldap-utils nscd
+apt-get -y install libnss-ldap libpam-ldap ldap-utils nslcd
 ```
 
 
