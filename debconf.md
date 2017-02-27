@@ -2,9 +2,9 @@
 
 Use the visual tools to set up your client and ensure it is working properly, then use debconf utils to automate your selections.
 
-   * Install the utils package `debconf-utils
-   * Use debconf-get-selections to find every value you manully configured.  In this example, we'll use ldap, but you can do this for any
-   install configured interactively by debconf.
+   * Install the utils package `debconf-utils`
+   * Use `debconf-get-selections` to find every value you manully configured durring the interactive install.  In this example, we'll use ldap, but you can do this for any interactive package.
+   
 ``` 
 root@client-6:/# debconf-get-selections | grep ^ldap
 ldap-auth-config        ldap-auth-config/bindpw password
@@ -20,13 +20,15 @@ ldap-auth-config        ldap-auth-config/override       boolean true
 ldap-auth-config        ldap-auth-config/ldapns/ldap_version    select  3
 ldap-auth-config        ldap-auth-config/dbrootlogin    boolean false
 ```
-   * Use `debconf-set-selections` to configure those selections for automation purposes.
-   * To test: `debconf-get-selections | grep ^ldap >> ldapselections` and then spin up a brand new, client instance.  Set the environmental varialbe
-   that tells debian not to run autoconfig, perform the instlall and then unset the variable:
+   * We will be using `debconf-set-selections` to configure those selections for automation purposes.
+   * To test: `debconf-get-selections | grep ^ldap >> ldapselections`.  Copy the new file ldapselections to a safe location, then then spin up a brand new, client instance.  
+   1) Install debconf-utils
+   2) Set the environmental varialbe telling Debian not to run autoconfig
+   3) perform the instlall and then unset the variable
    
  ```
 export DEBIAN_FRONTEND=noninteractive
-apt-get --yes install libnss-ldap libpam-ldap ldap-utils nslcd
+apt-get --yes install libnss-ldap libpam-ldap ldap-utils nslcd debconf-utils
 unset DEBIAN_FRONTEND
  ```
  
