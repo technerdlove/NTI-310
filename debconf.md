@@ -1,6 +1,12 @@
 # How to automate your installs using debconf
 
-Use the visual tools to set up your client and ensure it is working properly, then use debconf utils to automate your selections.
+Use the visual tools to set up your client and ensure it is working properly, then use debconf utils to automate your selections.  We'll use the example of the ldap client configuration in this doc.
+
+## Install your ldap client packages and configure as normal
+Install your ldap client packages: `apt-get install libnss-ldap libpam-ldap ldap-utils nslcd debconf-utils` you will be taken into an ncurses gui and prompted for configuration details.  Complete the configuration for both the ldap-auth-config package and the nslcd client.
+
+## Install debconf-utils
+After autoconfig runs, it places the configuration files you altered at install under 'debconf' managagement.  Debconf is a system for managing configurations that comes from Debian (hence the name).  You can poke around `/var/cache/debconf/` for raw datafiles or use `man debconf` for more info.
 
    * Install the utils package `debconf-utils`
    * Use `debconf-get-selections` to find every value you manully configured durring the interactive install.  In this example, we'll use ldap, but you can do this for any interactive package.
@@ -20,8 +26,11 @@ ldap-auth-config        ldap-auth-config/override       boolean true
 ldap-auth-config        ldap-auth-config/ldapns/ldap_version    select  3
 ldap-auth-config        ldap-auth-config/dbrootlogin    boolean false
 ```
-   * We will be using `debconf-set-selections` to configure those selections for automation purposes.
+   * We will be using `debconf-set-selections` to automate future installs.
    * To test: `debconf-get-selections | grep ^ldap >> ldapselections`.  Copy the new file ldapselections to a safe location, then then spin up a brand new, client instance.  
+   
+   
+## Testing Your Automation on a New Client
 1. Install debconf-utils
 2. Set the environmental varialbe telling Debian not to run autoconfig
 3. perform the instlall and then unset the variable
