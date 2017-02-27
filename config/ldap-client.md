@@ -19,5 +19,7 @@ update:
 
 
 BASE    dc=nti310,dc=local
-URI     ldap://10.128.0.12:389/
+URI     ldaps://10.128.0.12/
 ```
+
+where dc=nti310,dc=local your base search path and ldaps://10.128.0.12/ points to your ldap server.  Note that google provides internal dns for your project, so you may also point to an instance name instead of an IP, for example: ldaps://ldap-a/ 
