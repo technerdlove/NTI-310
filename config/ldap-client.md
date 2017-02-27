@@ -20,6 +20,10 @@ update:
 
 BASE    dc=nti310,dc=local
 URI     ldaps://10.128.0.12/
+
+# add TLS_REQCERT allow at the bottom
+
+TLS_REQCERT allow
 ```
 
 where dc=nti310,dc=local your base search path and ldaps://10.128.0.12/ points to your ldap server.  Note that google provides internal dns for your project, so you may also point to an instance name instead of an IP, for example: ldaps://ldap-a/ 
