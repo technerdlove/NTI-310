@@ -1,4 +1,4 @@
-# How to automate your installs using debconf
+# How to automate your interactive installs using debconf
 
 Use the visual tools to set up your client and ensure it is working properly, then use debconf utils to automate your selections.  We'll use the example of the ldap client configuration in this doc.
 
