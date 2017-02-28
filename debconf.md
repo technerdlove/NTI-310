@@ -48,7 +48,30 @@ unset DEBIAN_FRONTEND
  Then check to make sure your changes made it into debconf: `debconf-get-selections | grep ^ldap`
  
  
+ Remember that in the case of ldap, you will still need to manually configure files not managed by debconf such as `/etc/nsswitch.conf` and `/etc/ldap/ldap.conf`.  To complete your ldap install configuration, you'll need to set values for ldap-auth-config and nslcd
  
+ ```
+ root@client-6:~# debconf-get-selections | grep ^nslcd
+nslcd   nslcd/ldap-bindpw       password
+nslcd   nslcd/xdm-needs-restart error
+nslcd   nslcd/disable-screensaver       error
+nslcd   nslcd/ldap-base string  dc=nti310,dc=local
+nslcd   nslcd/restart-failed    error
+nslcd   nslcd/ldap-starttls     boolean false
+nslcd   nslcd/ldap-sasl-mech    select
+nslcd   nslcd/ldap-uris string  ldaps://10.128.0.12/
+nslcd   nslcd/ldap-auth-type    select  none
+nslcd   nslcd/ldap-sasl-authzid string
+nslcd   libraries/restart-without-asking        boolean false
+nslcd   nslcd/ldap-sasl-krb5-ccname     string  /var/run/nslcd/nslcd.tkt
+nslcd   nslcd/ldap-sasl-secprops        string
+nslcd   nslcd/ldap-reqcert      select  try
+nslcd   nslcd/ldap-binddn       string
+nslcd   nslcd/ldap-cacertfile   string  /etc/ssl/certs/ca-certificates.crt
+nslcd   nslcd/ldap-sasl-authcid string
+nslcd   nslcd/restart-services  string
+nslcd   nslcd/ldap-sasl-realm   string
+ ```
  
  
    
