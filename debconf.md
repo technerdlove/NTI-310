@@ -2,7 +2,7 @@
 
 # How to automate your interactive installs using debconf
 
-Use the visual tools to set up your client and ensure it is working properly, then use debconf utils to automate your selections.  We'll use the example of the ldap client configuration in this doc.
+Use the visual tools to set up your client and ensure it is working properly, then use debconf utils to automate your selections.  We'll use the example of an ldap client configuration in this doc.
 
 ## Install your ldap client packages and configure as normal
 Install your ldap client packages: `apt-get install libnss-ldap libpam-ldap ldap-utils nslcd debconf-utils` you will be taken into an ncurses gui and prompted for configuration details.  Complete the configuration for both the ldap-auth-config package and the nslcd client.
