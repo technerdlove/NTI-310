@@ -1,3 +1,7 @@
+# Installing secure ldap client
+This document will take you through the installation of an ldap client using ldaps.  Please note that while ldaps uses SSL and is fairly secure once the connection has been established, it has been depricated in favor of the better-documented START_TLS option in ldap 3, which runs over a single port and toggles encryption by issuing the command 'START_TSL'.  For more info see the relevent mailing list clarifications here (http://www.openldap.org/lists/openldap-software/200305/msg00084.html) and here (http://www.openldap.org/lists/openldap-software/200201/msg00042.html).
+
+
 Install ldap-utils, along with the ldap compatible versions of nss, ldap and nslcd.
 
 ```
