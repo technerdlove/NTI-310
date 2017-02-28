@@ -41,5 +41,14 @@ apt-get --yes install libnss-ldap libpam-ldap ldap-utils nslcd debconf-utils
 unset DEBIAN_FRONTEND
  ```
  
+ You now have a completely clean install.  Use debconf to configure your files.
+ 
+ `while read line; do echo "$line" | debconf-set-selections; done < ldap_debconf`
+ 
+ Then check to make sure your changes made it into debconf: `debconf-get-selections | grep ^ldap`
+ 
+ 
+ 
+ 
  
    
