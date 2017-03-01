@@ -1,4 +1,21 @@
-# Installing secure ldap client
+# SLAPD Server Configuration
+To enable ldaps `sudo vi /etc/sysconfig/slapd` and add `ldaps:///` to SLAPD_URLS so it looks like this: `SLAPD_URLS="ldapi:/// ldap:/// ldaps:///“`.  Then restart ldap
+`systemctl restart slapd`.  You are done!  When you have all your clients configured to use ldaps you can remove the ldapi and ldap options leaving only ldaps.  Don't forget to update your connection for phpmyadmin wen you do this.  You'll need to tell it to connect on port 636.
+
+To confirm that your server is now listening on port 636: `yum install lsof` and then run `lsof -i :636` and you'll see an ldaps process listening on the port.  For example:
+
+```
+root@ldap-automate nicolebade]# lsof -i :636
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+slapd   2964 ldap   10u  IPv4 224384      0t0  TCP *:ldaps (LISTEN)
+slapd   2964 ldap   11u  IPv6 224385      0t0  TCP *:ldaps (LISTEN)
+slapd   2964 ldap   13u  IPv4 224985      0t0  TCP ldap-automate.c.civil-epigram-138823.internal:ldaps->client-6.c.civil-epigram-138823.
+internal:58578 (ESTABLISHED)
+slapd   2964 ldap   22u  IPv4 229621      0t0  TCP ldap-automate.c.civil-epigram-138823.internal:ldaps->ldap-client-test.c.civil-epigram
+-138823.internal:48322 (ESTABLISHED)
+```
+
+## Installing secure ldap client
 This document will take you through the installation of an ldap client using ldaps.  Please note that while ldaps uses SSL and is fairly secure once the connection has been established, it has been depricated in favor of the better-documented START_TLS option in ldap 3, which runs over a single port and toggles encryption by issuing the command 'START_TSL'.  For more info see the relevent mailing list clarifications here (http://www.openldap.org/lists/openldap-software/200305/msg00084.html) and here (http://www.openldap.org/lists/openldap-software/200201/msg00042.html).
 
 
