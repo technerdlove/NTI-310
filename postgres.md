@@ -73,4 +73,61 @@ echo "from django.contrib.auth.models import User; User.objects.create_superuser
 Please use somthing more createive than pass for your password outside of the testing environment.
 
 
+## Installing phpmyadmin
+
+**** this part isn't ready yet!*****
+
+phpmyadmin will allow you to access your database info through a webpage.  It is also a good way for beginners to learn to construct queries and has some nifty data export features.  It goes without saying, that in a production environment this application should be entirely internal and should not be accessible outside the firewall.  It's your data :).
+
+```
+yum install httpd php php-pgsql
+yum -y install phpmyadmin
+
+```
+Edit `/etc/httpd/conf.d/phpMyAdmin.conf `, by default traffic is restricted to localhost which is more secure.  If you want to, you can install firefox on your local instance and xforward that session to browse your db that way.  On a normal network, you would restrict this to the internal network.  For our purposes, you will want to restrict it to your IP address and the IP of the school or open up permissions for later restriction.  The relevent lines are here:
+
+```
+#   <IfModule mod_authz_core.c>
+    # Apache 2.4
+#     <RequireAny>
+#       Require ip 127.0.0.1
+#       Require ip ::1
+#     </RequireAny>
+#   </IfModule>
+   <IfModule !mod_authz_core.c>
+     # Apache 2.2
+     Order Deny,Allow
+     Deny from All
+     Allow from 127.0.0.1
+     Allow from ::1
+   </IfModule>
+</Directory>
+<Directory /usr/share/phpMyAdmin/setup/>
+#   <IfModule mod_authz_core.c>
+     # Apache 2.4
+#     <RequireAny>
+#       Require ip 127.0.0.1
+#       Require ip ::1
+#     </RequireAny>
+#   </IfModule>
+   <IfModule !mod_authz_core.c>
+     # Apache 2.2
+     Order Deny,Allow
+     Deny from All
+     Allow from 127.0.0.1
+     Allow from ::1
+   </IfModule>
+</Directory>
+```
+
+Tell SELINUX to allow http to connect to postgres
+`setsebool -P httpd_can_network_connect_db 1`
+
+In this example, I commented them out the restriction lines (opening all of the data on my test site to the whims of the world) which I would not, repeate would not do in any sort of even mildly production environment but am doing as a step before securing the server.  I restarted apache `service httpd restart` and am now able to log into phpmyadmin. http://myserverip/phpmyadmin.
+
+
+
+```
+
+
 
