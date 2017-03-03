@@ -1,4 +1,11 @@
+# Connecting postgres and Django
 
+So, you have a posgres server installed and configured.  You've configured your project1 database, your project1 user and your django instance can run the test server.  You've edited your django settings.py using https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-centos-7 to point to your remote pg server but when you start to migrate, it is telling you the posgres server is unavailable.  This tutorial will shouw you how to make your pg server available on the network, taking traffic from your internal IP range but not external, and how to set up phpmyadmin so you can view your database visually.
+
+
+##  Configuring postgres to listen for remote connections
+
+Your next step is to connect your django server to your posgres server and migrate 
 
 
 edit `vim /var/lib/pgsql/data/pg_hba.conf` and add the line:
@@ -19,12 +26,15 @@ listen_addresses = '*'                   # what IP address(es) to listen on;
 
 restart postgres `systemctl restart  postgresql.service`
 
+## Running your django migration
+
 You should now be able to run your migration script without error.  You can test the port by telneting from your django server to 
 your postgres server on the postgres port: `telnet 10.128.0.10 5432`
 
 
 Go back to your django server, remember that your should be running as the user who owns `/opt/django/project1` directory, in my case, that user is nicolebade.  Also remember that you need to source your virtualenv: `source /opt/django/django-env/bin/activate` to use the correct python instance.
 
+change directory (`cd`) into `/opt/django/project1` and start your migration to postgres.  Your output should look like somthing like this
 
 ```
 (django-env) [nicolebade@django-staging project1]$ python manage.py migrate
@@ -45,3 +55,22 @@ Running migrations:
   Applying auth.0008_alter_user_username_max_length... OK
   Applying sessions.0001_initial... OK
 ```
+
+## Creating your django admin user
+
+```
+(django-env) [nicolebade@django-staging project1]$ python manage.py createsuperuser
+Username (leave blank to use 'nicolebade'): admin
+Email address: root@localhost
+Password: 
+Password (again): 
+Superuser created successfully.
+```
+Note: you can automate this step using
+```
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'pass')" | ./manage.py shell
+```
+Please use somthing more createive than pass for your password outside of the testing environment.
+
+
+
