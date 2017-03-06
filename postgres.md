@@ -5,7 +5,7 @@ So, you have a posgres server installed and configured.  You've configured your 
 
 ##  Configuring postgres to listen for remote connections
 
-Your next step is to connect your django server to your posgres server and migrate 
+Your next step is to connect your django server to your postgres server and migrate 
 
 
 edit `vim /var/lib/pgsql/data/pg_hba.conf` and add the line:
