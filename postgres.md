@@ -1,6 +1,6 @@
 # Connecting postgres and Django
 
-So, you have a posgres server installed and configured.  You've configured your project1 database, your project1 user and your django instance can run the test server.  You've edited your django settings.py using https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-centos-7 to point to your remote pg server but when you start to migrate, it is telling you the posgres server is unavailable.  This tutorial will shouw you how to make your pg server available on the network, taking traffic from your internal IP range but not external, and how to set up phpmyadmin so you can view your database visually.
+So, you have a posgres server installed and configured.  You've configured your project1 database, your project1 user and your django instance can run the test server.  You've edited your django settings.py using https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-centos-7 to point to your remote pg server but when you start to migrate, it is telling you the posgres server is unavailable.  This tutorial will shouw you how to make your pg server available on the network, taking traffic from your internal IP range but not external, and how to set up phpPgAdmin so you can view your database visually.
 
 
 ##  Configuring postgres to listen for remote connections
