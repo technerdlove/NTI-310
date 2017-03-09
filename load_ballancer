@@ -1,0 +1,13 @@
+yum install epel-release
+yum install nginx
+firewall status
+firewall-cmd --state
+sudo firewall-cmd --permanent --zone=public --add-service=http 
+sudo firewall-cmd --permanent --zone=public --add-service=https
+sudo firewall-cmd --reload
+systemctl start nginx
+systemctl enable nginx
+
+
+cd /etc/nginx
+
