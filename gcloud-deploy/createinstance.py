@@ -15,20 +15,14 @@ print "currently running:"
 def list_instances(compute, project, zone):
     result = compute.instances().list(project=project, zone=zone).execute()
     return result['items']
-
-
-
-
-
-
-centos_server =           open('centos_config.json', 'r').read()      # Slightly edited Rest Json with variables
-ubuntu_client =           open('ubuntu_config.json', 'r').read()      # Slightly edited Rest Json with variables
-configuration_script =    open('server_config.sh', 'r').read()        # We'll need to read this in, mod it, based on the hostname
-                                                                      # and such, then write this out.
-#def create_instance(compute, project, zone, name, bucket): * I"m thinking we can avoid this bucket buisness... let's see.
+    
 def create_instance(compute, os_type, project, zone, name, config_script):
+    centos_server =           open('centos_config.json', 'r').read()      # Slightly edited Rest Json with variables
+    ubuntu_client =           open('ubuntu_config.json', 'r').read()      # Slightly edited Rest Json with variables
+    configuration_script =    open('server_config.sh', 'r').read()        # We'll need to read this in, mod it, based on the hostname
+                                                                          # and such, then write this out.
     image_response = compute.images().getFromFamily(
-       project='centos-cloud', family='centos-8').execute()
+       project='centos-cloud', family='centos-7').execute()
     source_disk_image = image_response['selfLink']
 
     
@@ -40,11 +34,6 @@ def create_instance(compute, os_type, project, zone, name, config_script):
     image_url = "https://s-media-cache-ak0.pinimg.com/736x/b2/59/b4/b259b4fb6fc7a18b432a01b6051a7bf7.jpg"
     image_caption = "Just Google It :P"
     
-    # ToDo, once OStype is selected, read the config into a new file with the name of the machine
-    # and the date-min and secs (to provide ordered uniqueness)
-    # config will be equal to the newfile
-    # I would like to make the startup script bit seperate... in fact, that's rather important.  But we'll
-    # know from the name what kind of machine this will be already... hrm.
     
     config =         # which will contain the specs for the centos_server or the ubuntu client.  :D
                      # somewhere along the lines here, we need to customize the config...
