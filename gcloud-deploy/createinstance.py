@@ -24,12 +24,23 @@ def list_instances(compute, project, zone):
 centos_server =     open('centos_config.json', 'r').read()      # Slightly edited Rest Json with variables
 ubuntu_client =     open('ubuntu_config.json', 'r').read()      # Slightly edited Rest Json with variables
 
+configuration_script = open('server_config.sh', 'r').read()     # We'll need to read this in, mod it, based on the hostname
+                                                                # and such, then write this out.
 #def create_instance(compute, project, zone, name, bucket): * I"m thinking we can avoid this bucket buisness... let's see.
 def create_instance(compute, os_type, project, zone, name, config_script):
     image_response = compute.images().getFromFamily(
        project='centos-cloud', family='centos-8').execute()
     source_disk_image = image_response['selfLink']
 
+    
+     # Configure the machine
+    machine_type = "zones/%s/machineTypes/f1-micro" % zone
+    startup_script = open(
+        os.path.join(
+            os.path.dirname(__file__), 'configuration_script'), 'r').read()
+    image_url = "https://s-media-cache-ak0.pinimg.com/736x/b2/59/b4/b259b4fb6fc7a18b432a01b6051a7bf7.jpg"
+    image_caption = "Just Google It :P"
+    
     # ToDo, once OStype is selected, read the config into a new file with the name of the machine
     # and the date-min and secs (to provide ordered uniqueness)
     # config will be equal to the newfile
