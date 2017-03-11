@@ -1,0 +1,33 @@
+usage="
+
+
+"
+
+
+
+if [ $# == 0 ]; then
+   echo $usage
+   exit 0;
+fi
+
+case "$*" in
+
+-ldapserver)       echo "creating an ldap server"
+                   ;;
+-nfsserver)        echo "creating an nfs server"
+                   ;;
+-dnsserver)        echo "creating a dns server"
+                   ;;
+-clients)          echo "creating an ubuntu client"
+                   ;;
+-kerberoseserver)  echo "creating a kerberose server"
+                   ;;
+-nginxserver)      echo "creating a nginx server"
+                   ;;
+-djangoserver)     echo "creating a django server"
+                   ;;
+-postgresserver)   echo "creating a postgres server"
+                   ;;
+
+esac
+
