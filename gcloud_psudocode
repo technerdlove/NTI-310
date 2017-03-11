@@ -1,5 +1,7 @@
 usage="
 
+This is concept code for the level 3 or 4 wrapper script to bring up a network of machines in a new project.  The arguments it will 
+need to take from the command line are: project, zone, servertype, and number of servers/clients
 
 "
 
