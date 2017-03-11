@@ -23,7 +23,9 @@ so, actually... the cases I want are:
 
 
 
-may want to itterate here... instead of using $* case statements.
+may want to itterate here... instead of using $* case statements.  Most importantly, I want to look for kerberose, ngix, ldap and
+dns servers first, so I can bring them up first.
+
 case "$*" in
 
 -ldapserver)       echo "creating an ldap server"
