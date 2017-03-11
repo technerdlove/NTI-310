@@ -36,15 +36,14 @@ def create_instance(compute, os_type, project, zone, name, config_script):
     # I would like to make the startup script bit seperate... in fact, that's rather important.  But we'll
     # know from the name what kind of machine this will be already... hrm.
     
-    config =  # which will contain the specs for the centos_server or the ubuntu client.  :D
+    config =        # which will contain the specs for the centos_server or the ubuntu client.  :D
                      # somewhere along the lines here, we need to customize the config...
                      # AAAAAAH
-    
-    
-     return compute.instances().insert(
-     project=project,
-     zone=zone,
-     body=config).execute()
+
+    return compute.instances().insert(
+    project=project,
+    zone=zone,
+    body=config).execute()
   
 
 # We'll need to read in an additional file, which is the scripting file for the server we are creating.  
