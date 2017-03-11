@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # Let's build our imports and make them our best friends... we can make them long
-# Or we can make them 'not so long' imports.
+# Or we can make them... 'not so long'... imports.
 from oauth2client.client import GoogleCredentials               # References https://cloud.google.com/compute/docs/tutorials/python-guide
 from googleapiclient import discovery                           # https://cloud.google.com/compute/docs/reference/latest/instances/insert
 
