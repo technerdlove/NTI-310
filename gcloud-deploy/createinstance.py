@@ -16,7 +16,9 @@ def list_instances(compute, project, zone):
     result = compute.instances().list(project=project, zone=zone).execute()
     return result['items']
     
-def create_instance(compute, os_type, project, zone, name, config_script):
+def create_instance(compute, project, zone, name):
+    #os type can be derrived, since it will be centos7 unless it is a client
+    # name can also be derrived, since it will be next in the logical order... 'ldap-a, ldap-b, ldap-c' and so forth
     centos_server =           open('centos_config.json', 'r').read()      # Slightly edited Rest Json with variables
     ubuntu_client =           open('ubuntu_config.json', 'r').read()      # Slightly edited Rest Json with variables
     configuration_script =    open('server_config.sh', 'r').read()        # We'll need to read this in, mod it, based on the hostname
