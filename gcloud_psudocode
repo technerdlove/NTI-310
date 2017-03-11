@@ -3,6 +3,8 @@ usage="
 This is concept code for the level 3 or 4 wrapper script to bring up a network of machines in a new project.  The arguments it will 
 need to take from the command line are: project, zone, servertype, and number of servers/clients
 
+The heavy lifting won't be done here, but in a python script and a 'server/client' config file.
+
 "
 
 
@@ -12,6 +14,8 @@ if [ $# == 0 ]; then
    exit 0;
 fi
 
+
+may want to itterate here... instead of using $* case statements.
 case "$*" in
 
 -ldapserver)       echo "creating an ldap server"
