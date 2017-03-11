@@ -7,7 +7,7 @@
     {
       "autoDelete": true,
       "boot": true,
-      "deviceName": "machine_name",
+      "deviceName": "client-6",
       "index": 0,
       "interface": "SCSI",
       "kind": "compute#attachedDisk",
@@ -15,7 +15,7 @@
         "projects/ubuntu-os-cloud/global/licenses/ubuntu-1604-xenial"
       ],
       "mode": "READ_WRITE",
-      "source": "projects/civil-epigram-138823/zones/us-central1-b/disks/machine_name",
+      "source": "projects/civil-epigram-138823/zones/us-central1-b/disks/client-6",
       "type": "PERSISTENT"
     }
   ],
@@ -23,7 +23,7 @@
   "kind": "compute#instance",
   "labelFingerprint": "42WmSpB8rSM=",
   "machineType": "projects/civil-epigram-138823/zones/us-central1-b/machineTypes/f1-micro",
-  "name": "machine_name",
+  "name": "client-6",
   "networkInterfaces": [
     {
       "accessConfigs": [
@@ -46,7 +46,7 @@
     "onHostMaintenance": "MIGRATE",
     "preemptible": false
   },
-  "selfLink": "projects/civil-epigram-138823/zones/us-central1-b/instances/machine-name",
+  "selfLink": "projects/civil-epigram-138823/zones/us-central1-b/instances/client-6",
   "serviceAccounts": [
     {
       "email": "538872300908-compute@developer.gserviceaccount.com",
@@ -64,9 +64,9 @@
   "tags": {
     "fingerprint": "42WmSpB8rSM=",
     "items": [
+      "bla",
       "client",
-      "headless',
-      "internal"
+      "server"
     ]
   },
   "zone": "projects/civil-epigram-138823/zones/us-central1-b",
