@@ -1,4 +1,4 @@
-
+import os
 
 def create_instance(compute, project, zone, name):
     #Centos config for 'yall
