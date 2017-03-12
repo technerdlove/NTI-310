@@ -6,7 +6,7 @@ def create_instance(compute, project, zone, name):
       project='centos-cloud', family='centos-7').execute()
     source_disk_image = image_response['selfLink']
     
-    machine_type = "zones/%s/machineTypes/n1-standard-1" % zone
+    machine_type = "zones/%s/machineTypes/f1-micro" % zone
     startup_script = open(
         os.path.join(
             os.path.dirname(__file__), 'startup-script.sh'), 'r').read()
